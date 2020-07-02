@@ -42,8 +42,17 @@ Following image segmentation, a patch-based grading of the entire brain was perf
 The method begins by building a training library T from two datasets of images: one with images from CN subjects and the other one from AD patients. Then, for each voxel x<sub>i</sub> of the region of interest in the considered subject x, the PBG method produces a weak classifier denoted, g<sub>x<sub>i</sub></sub>, that provides a surrogate for the pathological grading at the considered position i. A PBG value is computed using a measurement of the similarity between the patch P<sub>x<sub>i</sub></sub> surrounding the voxel x<sub>i</sub> belonging to the image under study and a set K<sub>x<sub>i</sub></sub> = {P<sub>t<sub>j</sub></sub>} of the closest patches P<sub>t<sub>j</sub></sub>, surrounding the voxel t<sub>j</sub>, extracted from the template t &isin; T. The grading value g<sub>x<sub>i</sub></sub>$ at x<sub>i</sub> is defined as:
 </p>
 
-<p align="center"><img src="figures/figure_2.png" width="600"><br>
-Fig. 2 Schema of the proposed multi-scale graph-based grading method. First, the segmentation maps are used to aggregate grading values. Our method computes a histogram for each structure/subfield. Once the graphs are built, an elastic net is computed to select the most discriminating graph features for each anatomical scale. A first layer of random forest classifiers are computed to estimate a posteriori probabilities. Finally, a linear classifier is trained with the a posteriori probabilities from each anatomical scale to compute the final decision. A random forest classifier replaces the linear classifier for the multimodal experiments to deal with the feature heterogeneity resulting from the concatenation of a posteriori probabilities and cognitive scores.</p>
+<p align="center"><img src="https://latex.codecogs.com/svg.latex?g_{x_i}%20=%20\frac{\sum_{t_{j}%20\in%20K_{x_i}}%20w(P_{x_i},P_{t_{j}})%20p_t}{\sum_{t_{j}%20\in%20K_{x_i}}%20w(P_{x_i},P_{t_{j}})}" align="center" border="0"/></p>
+
+<p align="justify">
+where w(x<sub>i</sub>,t<sub>j</sub>) is the weight assigned to the pathological status p<sub>t</sub> of the training image t. We estimate w as:
+</p>
+
+<p align="center"><img src="https://latex.codecogs.com/svg.latex?w(P_{x_{i}},P_{t_{j}})%20=%20\exp%20\Big(%20-%20\tfrac{||P_{x_{i}}%20-%20P_{t_{j}}||^2_2}{h^2}%20%20\Big)" align="center" border="0"/></p>
+
+<p align="justify">
+where h=min ||P<sub>x<sub>i</sub></sub> - P<sub>t<sub>j</sub></sub>|| + \epsilon$ and &epsilon; -> 0. The pathological status p<sub>t</sub> is set to -1 for patches extracted from AD patients and to 1 for patches extracted from CN subjects. Therefore, the PBG method provides a score representing an estimate of the alterations caused by AD at each voxel. Consequently, cerebral tissues strongly altered by AD have scores close to -1 while healthy tissues have scores close to 1. 
+</p>
 
 ### Graph Construction
 
@@ -58,6 +67,9 @@ In our graph-based grading method, the segmentation maps were used to fuse gradi
 <p align="justify">
 where W is the Wasserstein distance with L<sub>1</sub> norm \citep{rubner2000earth} that showed best performance during our experiments. \red{Indeed, this metric introduced by the optimal transport theory, aims to minimize the amount of work needed to rearrange the histogram $H_{v_i}$ to $H_{v_j}$.}
 </p>
+
+<p align="center"><img src="figures/figure_2.png" width="600"><br>
+Fig. 2 Schema of the proposed multi-scale graph-based grading method. First, the segmentation maps are used to aggregate grading values. Our method computes a histogram for each structure/subfield. Once the graphs are built, an elastic net is computed to select the most discriminating graph features for each anatomical scale. A first layer of random forest classifiers are computed to estimate a posteriori probabilities. Finally, a linear classifier is trained with the a posteriori probabilities from each anatomical scale to compute the final decision. A random forest classifier replaces the linear classifier for the multimodal experiments to deal with the feature heterogeneity resulting from the concatenation of a posteriori probabilities and cognitive scores.</p>
 
 
 ### Features selection
