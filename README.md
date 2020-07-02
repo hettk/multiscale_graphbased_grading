@@ -28,7 +28,7 @@ As illustrated in Figure~\ref{fig:gsg_workflow}, our graph of structure grading 
 First, a segmentation of the structures of interest is computed on the input images. Then, a patch-based grading (PBG) approach is conducted over every segmented structures (e.g., hippocampal subfields and brain structures). The two main alterations impacting the brain structures captured with PBG methods are the changes caused by normal aging \citep{koikkalainen2012improved} and the alterations caused by the progression of AD. Therefore, at each voxel, the grading values are age-corrected to avoid bias due to normal aging. After the patch-based grading maps are age-corrected, we construct an undirected graph to model the topology of alterations caused by Alzheimer's disease. This results in a high dimensional feature vector. Consequently, to reduce the dimensionality of the feature vector computed by our graph-based method, we use an elastic net that provides a sparse representation of the most discriminative elements of our graph (i.e., edges and vertices). We use only the most discriminative features of our graph as the input to a random forest method which predicts the subject's conversion.
 </p>
 
-<p align="center"><img src="figures/pipeline.png" width="600"><br>
+<p align="center"><img src="figures/figure_1.png" width="600"><br>
 Fig. 1 Pipeline of the proposed graph-based grading method. PBG is computed using CN and AD training groups. CN group is also used to correct the bias related to age. Then, this estimation is applied to AD and MCI subjects. Afterwards, the graph is constructed, and the feature selection is trained on CN and AD and then is applied to CN, AD and MCI. Finally the classifier is trained with CN and AD.</p>
 <br>
 
@@ -42,7 +42,7 @@ Following image segmentation, a patch-based grading of the entire brain was perf
 The method begins by building a training library $T$ from two datasets of images: one with images from CN subjects and the other one from AD patients. Then, for each voxel $x_i$ of the region of interest in the considered subject $x$, the PBG method produces a weak classifier denoted, $g_{x_i}$, that provides a surrogate for the pathological grading at the considered position $i$. A PBG value is computed using a measurement of the similarity between the patch $P_{x_i}$ surrounding the voxel $x_i$ belonging to the image under study and a set $K_{x_i} = \{ P_{t_{j}} \}$ of the closest patches $P_{t_j}$, surrounding the voxel $t_j$, extracted from the template $t \in T$. The grading value $g_{x_i}$ at $x_i$ is defined as:
 </p>
 
-<p align="center"><img src="figures/pbd_illustration.png" width="600"><br>
+<p align="center"><img src="figures/figure_2.png" width="600"><br>
 Fig. 2 Schema of the proposed multi-scale graph-based grading method. First, the segmentation maps are used to aggregate grading values. Our method computes a histogram for each structure/subfield. Once the graphs are built, an elastic net is computed to select the most discriminating graph features for each anatomical scale. A first layer of random forest classifiers are computed to estimate a posteriori probabilities. Finally, a linear classifier is trained with the a posteriori probabilities from each anatomical scale to compute the final decision. A random forest classifier replaces the linear classifier for the multimodal experiments to deal with the feature heterogeneity resulting from the concatenation of a posteriori probabilities and cognitive scores.</p>
 
 ## Graph Construction
@@ -59,11 +59,6 @@ In our graph-based grading method, the segmentation maps were used to fuse gradi
 where $W$ is the Wasserstein distance with $L_1$ norm \citep{rubner2000earth} that showed best performance during our experiments. \red{Indeed, this metric introduced by the optimal transport theory, aims to minimize the amount of work needed to rearrange the histogram $H_{v_i}$ to $H_{v_j}$.}
 </p>
 
-<p align="center"><img src="figures/network.png" width="600"><br>
-Fig. 3 Schema of the proposed multi-scale graph-based grading method. First, the segmentation maps are used to aggregate grading values. Our method computes a histogram for each structure/subfield. Once the graphs are built, an elastic net is computed to select the most discriminating graph features for each anatomical scale. A first layer of random forest classifiers are computed to estimate a posteriori probabilities. Finally, a linear classifier is trained with the a posteriori probabilities from each anatomical scale to compute the final decision. A random forest classifier replaces the linear classifier for the multimodal experiments to deal with the feature heterogeneity resulting from the concatenation of a posteriori probabilities and cognitive scores.
-</p>
-
-
 
 ## Features selection
 
@@ -75,8 +70,8 @@ Completion of the previous step results in a high-dimensional feature vector. Be
 where $\hat{\beta}$ is a sparse vector that represents the regression coefficients and $X$ is a matrix with rows corresponding to the subjects and columns corresponding to the features, including: the vertices, the edges or a concatenation of both for the full graph of grading feature vector. $\rho$ and $\lambda$ are the regularization hyper-parameters set to balance the sparsity and the correlation inter-feature, and $y$ represents the pathological status of each patient.
 </p>
 
-<p align="center"><img src="figures/network.png" width="600"><br>
-Fig. 4 Representation of the most selected structures. The brain structures and hippocampal subfields are selected separately with the elastic net method. Frequently selected structures are colored using opaque red to transparent for structures never selected. (A) the most frequently selected brain structures are the temporal lobe, the postcentral gyrus, the anterior cingulate gyrus, the hippocampus and the precuneus. (B) the most frequently selected hippocampal subfields are the CA1-SP, the CA1-SRLM, and the subiculum.</p>
+<p align="center"><img src="figures/figure_3.png" width="600"><br>
+Fig. 3 Representation of the most selected structures. The brain structures and hippocampal subfields are selected separately with the elastic net method. Frequently selected structures are colored using opaque red to transparent for structures never selected. (A) the most frequently selected brain structures are the temporal lobe, the postcentral gyrus, the anterior cingulate gyrus, the hippocampus and the precuneus. (B) the most frequently selected hippocampal subfields are the CA1-SP, the CA1-SRLM, and the subiculum.</p>
 
 
 ## References
