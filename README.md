@@ -25,7 +25,7 @@ As illustrated in Figure 1, our graph of structure grading method that combines 
 </p>
 
 <p align="justify">
-First, a segmentation of the structures of interest is computed on the input images. Then, a patch-based grading (PBG) approach is conducted over every segmented structures (e.g., hippocampal subfields and brain structures). The two main alterations impacting the brain structures captured with PBG methods are the changes caused by normal aging \citep{koikkalainen2012improved} and the alterations caused by the progression of AD. Therefore, at each voxel, the grading values are age-corrected to avoid bias due to normal aging. After the patch-based grading maps are age-corrected, we construct an undirected graph to model the topology of alterations caused by Alzheimer's disease. This results in a high dimensional feature vector. Consequently, to reduce the dimensionality of the feature vector computed by our graph-based method, we use an elastic net that provides a sparse representation of the most discriminative elements of our graph (i.e., edges and vertices). We use only the most discriminative features of our graph as the input to a random forest method which predicts the subject's conversion.
+First, a segmentation of the structures of interest is computed on the input images. Then, a patch-based grading (PBG) approach is conducted over every segmented structures (e.g., hippocampal subfields and brain structures). The two main alterations impacting the brain structures captured with PBG methods are the changes caused by normal aging [1] and the alterations caused by the progression of AD. Therefore, at each voxel, the grading values are age-corrected to avoid bias due to normal aging. After the patch-based grading maps are age-corrected, we construct an undirected graph to model the topology of alterations caused by Alzheimer's disease. This results in a high dimensional feature vector. Consequently, to reduce the dimensionality of the feature vector computed by our graph-based method, we use an elastic net that provides a sparse representation of the most discriminative elements of our graph (i.e., edges and vertices). We use only the most discriminative features of our graph as the input to a random forest method which predicts the subject's conversion.
 </p>
 
 <p align="center"><img src="figures/figure_1.png" width="600"><br>
@@ -35,7 +35,7 @@ Fig. 1 Pipeline of the proposed graph-based grading method. PBG is computed usin
 ### Patch-based grading
 
 <p align="justify">
-Following image segmentation, a patch-based grading of the entire brain was performed using the method described in \citep{hett2018adaptive}. This method was first proposed to detect hippocampus structural alterations with a new scale of analysis \citep{coupe2012simultaneous,coupe2012scoring}. The patch-based grading approach provides the probability that the disease has impacted the underlying structure at each voxel. This probability is estimated via an inter-subject similarity measurement derived from a non-local approach.
+Following image segmentation, a patch-based grading of the entire brain was performed using the method described in [3]. This method was first proposed to detect hippocampus structural alterations with a new scale of analysis [2]. The patch-based grading approach provides the probability that the disease has impacted the underlying structure at each voxel. This probability is estimated via an inter-subject similarity measurement derived from a non-local approach.
 </p>
 
 <p align="justify">
@@ -57,15 +57,18 @@ where h=min ||P<sub>x<sub>i</sub></sub> - P<sub>t<sub>j</sub></sub>|| + \epsilon
 ### Graph Construction
 
 <p align="justify">
-Once structure alterations were estimated using patch-based grading, we modeled intra-subject variability for each subject using a graph to better capture the AD signature. \red{Indeed, within the last decade, graph modeling has been widely used for its ability to capture the patterns of different diseases \citep{tong2017multi,parisot2018disease}.} This is achieved by encoding the relationships of abnormalities between different structures in the edges of the graph. Furthermore, graph modeling can also depict inter-subject similarity, by independently encoding the abnormality of each structure in the vertices measurement. Consequently, we proposed a graph-based grading approach that uses a graph model to combine inter-subject similarities computed with the PBG and intra-subjects' variability computed with the difference of the grading value distributions for each structure.
+Once structure alterations were estimated using patch-based grading, we modeled intra-subject variability for each subject using a graph to better capture the AD signature. Indeed, within the last decade, graph modeling has been widely used for its ability to capture the patterns of different diseases [4]. This is achieved by encoding the relationships of abnormalities between different structures in the edges of the graph. Furthermore, graph modeling can also depict inter-subject similarity, by independently encoding the abnormality of each structure in the vertices measurement. Consequently, we proposed a graph-based grading approach that uses a graph model to combine inter-subject similarities computed with the PBG and intra-subjects' variability computed with the difference of the grading value distributions for each structure.
 </p>
 
 <p align="justify">
-In our graph-based grading method, the segmentation maps were used to fuse grading values into each ROI, and to build our graph. We defined an undirected graph $G=(V, E, \gamma, \omega)$, where $V=\{v_1,...,v_N\}$ is the set of vertices for the $N$ considered brain structures, $E=V \times V$ is the set of edges, $\gamma$ and $\omega$ are two functions of the vertices and the edges, respectively. In our work, $\gamma$ is the mean of the grading values for a given structure while $\omega$ computes grading distribution distance between two structures. To this end, the probability distributions of PBG values were estimated with a histogram $H_v$ for each structure $v$. \red{The number of bins was computed with Sturge's rule \citep{sturges1926choice} using the average of number voxels that compose each brain structure or hippocampal subfields (\emph{i.e.}, histogram of whole brain structures and hippocampal subfields were estimated using different bin number)}. For each vertex we assigned a function $\gamma:V\rightarrow \mathbb{R}$ defined as $\gamma(v) = \mu_{H_v}$, where $\mu_{H_v}$ is the mean of $H_v$. For each edge we assigned a weight given by the function $\omega:E\rightarrow \mathbb{R}$ defined as follows:
+In our graph-based grading method, the segmentation maps were used to fuse grading values into each ROI, and to build our graph. We defined an undirected graph G=(V, E, &gamma;, &omega;)$, where V={v<sub>1</sub>,...,v<sub>N</sub>} is the set of vertices for the N considered brain structures, E=V&times;V is the set of edges, &gamma; and &omega; are two functions of the vertices and the edges, respectively. In our work, &gamma; is the mean of the grading values for a given structure while &omega; computes grading distribution distance between two structures. To this end, the probability distributions of PBG values were estimated with a histogram H<sub>v</sub> for each structure v. The number of bins was computed with Sturge's rule [6] using the average of number voxels that compose each brain structure or hippocampal subfields (i.e., histogram of whole brain structures and hippocampal subfields were estimated using different bin number). For each vertex we assigned a function &gamma;:V -> R$ defined as &gamma;(v) = &mu;<sub>H<sub>v</sub></sub>$, where &mu;<sub>H<sub>v</sub></sub> is the mean of H<sub>v</sub>. For each edge we assigned a weight given by the function &omega;:E -> R$ defined as follows:
 </p>
 
+<p align="center"><img src="https://latex.codecogs.com/svg.latex?\omega(v_i,v_j)%20=%20\exp%20(%20-W(H_{v_i},H_{v_j})^2%20/%20\sigma^2" align="center" border="0"/></p>
+
+
 <p align="justify">
-where W is the Wasserstein distance with L<sub>1</sub> norm \citep{rubner2000earth} that showed best performance during our experiments. \red{Indeed, this metric introduced by the optimal transport theory, aims to minimize the amount of work needed to rearrange the histogram $H_{v_i}$ to $H_{v_j}$.}
+where W is the Wasserstein distance with L<sub>1</sub> norm [5] that showed best performance during our experiments. Indeed, this metric introduced by the optimal transport theory, aims to minimize the amount of work needed to rearrange the histogram $H_{v_i}$ to $H_{v_j}$.
 </p>
 
 <p align="center"><img src="figures/figure_2.png" width="600"><br>
@@ -87,7 +90,14 @@ Fig. 3 Representation of the most selected structures. The brain structures and 
 
 
 ## References
-[1] Coupé, Pierrick, et al. "Simultaneous segmentation and grading of anatomical structures for patient's classification: application to Alzheimer's disease." NeuroImage 59.4 (2012): 3736-3747.
+[1] Koikkalainen, Juha, et al. "Improved classification of Alzheimer's disease data via removal of nuisance variability." PloS one 7.2 (2012): e31112.
 
-[2] Hett, Kilian, et al. "Adaptive fusion of texture-based grading for Alzheimer's disease classification." Computerized Medical Imaging and Graphics 70 (2018): 8-16.
+[2] Coupé, Pierrick, et al. "Simultaneous segmentation and grading of anatomical structures for patient's classification: application to Alzheimer's disease." NeuroImage 59.4 (2012): 3736-3747.
 
+[3] Hett, Kilian, et al. "Adaptive fusion of texture-based grading for Alzheimer's disease classification." Computerized Medical Imaging and Graphics 70 (2018): 8-16.
+
+[4] Tong, Tong, et al. "Multi-modal classification of Alzheimer's disease using nonlinear graph fusion." Pattern recognition 63 (2017): 171-181.
+
+[5] Rubner, Yossi, Carlo Tomasi, and Leonidas J. Guibas. "The earth mover's distance as a metric for image retrieval." International journal of computer vision 40.2 (2000): 99-121.
+
+[6] Sturges, Herbert A. "The choice of a class interval." Journal of the american statistical association 21.153 (1926): 65-66.
