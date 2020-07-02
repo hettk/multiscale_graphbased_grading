@@ -29,7 +29,7 @@ First, a segmentation of the structures of interest is computed on the input ima
 </p>
 
 <p align="center"><img src="figures/figure_1.png" width="600"><br>
-Fig. 1 Pipeline of the proposed graph-based grading method. PBG is computed using CN and AD training groups. CN group is also used to correct the bias related to age. Then, this estimation is applied to AD and MCI subjects. Afterwards, the graph is constructed, and the feature selection is trained on CN and AD and then is applied to CN, AD and MCI. Finally the classifier is trained with CN and AD.</p>
+<i>Fig. 1 Pipeline of the proposed graph-based grading method. PBG is computed using CN and AD training groups. CN group is also used to correct the bias related to age. Then, this estimation is applied to AD and MCI subjects. Afterwards, the graph is constructed, and the feature selection is trained on CN and AD and then is applied to CN, AD and MCI. Finally the classifier is trained with CN and AD.</i></p>
 <br>
 
 ### Patch-based grading
@@ -71,7 +71,7 @@ where W is the Wasserstein distance with L<sub>1</sub> norm [5] that showed best
 </p>
 
 <p align="center"><img src="figures/figure_2.png" width="600"><br>
-Fig. 2 Schema of the proposed multi-scale graph-based grading method. First, the segmentation maps are used to aggregate grading values. Our method computes a histogram for each structure/subfield. Once the graphs are built, an elastic net is computed to select the most discriminating graph features for each anatomical scale. A first layer of random forest classifiers are computed to estimate a posteriori probabilities. Finally, a linear classifier is trained with the a posteriori probabilities from each anatomical scale to compute the final decision. A random forest classifier replaces the linear classifier for the multimodal experiments to deal with the feature heterogeneity resulting from the concatenation of a posteriori probabilities and cognitive scores.</p>
+<i>Fig. 2 Schema of the proposed multi-scale graph-based grading method. First, the segmentation maps are used to aggregate grading values. Our method computes a histogram for each structure/subfield. Once the graphs are built, an elastic net is computed to select the most discriminating graph features for each anatomical scale. A first layer of random forest classifiers are computed to estimate a posteriori probabilities. Finally, a linear classifier is trained with the a posteriori probabilities from each anatomical scale to compute the final decision. A random forest classifier replaces the linear classifier for the multimodal experiments to deal with the feature heterogeneity resulting from the concatenation of a posteriori probabilities and cognitive scores.</i></p>
 
 
 ### Features selection
@@ -88,7 +88,7 @@ where <img src="https://latex.codecogs.com/svg.latex?\hat{\beta}"/> is a sparse 
 </p>
 
 <p align="center"><img src="figures/figure_3.png" width="600"><br>
-Fig. 3 Representation of the most selected structures. The brain structures and hippocampal subfields are selected separately with the elastic net method. Frequently selected structures are colored using opaque red to transparent for structures never selected. (A) the most frequently selected brain structures are the temporal lobe, the postcentral gyrus, the anterior cingulate gyrus, the hippocampus and the precuneus. (B) the most frequently selected hippocampal subfields are the CA1-SP, the CA1-SRLM, and the subiculum.</p>
+<i>Fig. 3 Representation of the most selected structures. The brain structures and hippocampal subfields are selected separately with the elastic net method. Frequently selected structures are colored using opaque red to transparent for structures never selected. (A) the most frequently selected brain structures are the temporal lobe, the postcentral gyrus, the anterior cingulate gyrus, the hippocampus and the precuneus. (B) the most frequently selected hippocampal subfields are the CA1-SP, the CA1-SRLM, and the subiculum.</i></p>
 
 
 ## References
