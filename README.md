@@ -32,20 +32,20 @@ First, a segmentation of the structures of interest is computed on the input ima
 Fig. 1 Pipeline of the proposed graph-based grading method. PBG is computed using CN and AD training groups. CN group is also used to correct the bias related to age. Then, this estimation is applied to AD and MCI subjects. Afterwards, the graph is constructed, and the feature selection is trained on CN and AD and then is applied to CN, AD and MCI. Finally the classifier is trained with CN and AD.</p>
 <br>
 
-## Patch-based grading
+### Patch-based grading
 
 <p align="justify">
 Following image segmentation, a patch-based grading of the entire brain was performed using the method described in \citep{hett2018adaptive}. This method was first proposed to detect hippocampus structural alterations with a new scale of analysis \citep{coupe2012simultaneous,coupe2012scoring}. The patch-based grading approach provides the probability that the disease has impacted the underlying structure at each voxel. This probability is estimated via an inter-subject similarity measurement derived from a non-local approach.
 </p>
 
 <p align="justify">
-The method begins by building a training library T from two datasets of images: one with images from CN subjects and the other one from AD patients. Then, for each voxel <sub>x<sub>i</sub></sub> of the region of interest in the considered subject x, the PBG method produces a weak classifier denoted, g<sub>x<sub>i</sub></sub>, that provides a surrogate for the pathological grading at the considered position i. A PBG value is computed using a measurement of the similarity between the patch P<sub>x<sub>i</sub></sub> surrounding the voxel x<sub>i</sub> belonging to the image under study and a set K<sub>x<sub>i</sub></sub> = { P<sub>t<sub>j</sub></sub> } of the closest patches P<sub>t<sub>j</sub></sub>, surrounding the voxel t<sub>j</sub>, extracted from the template t &isin; T. The grading value g<sub>x<sub>i</sub></sub>$ at x<sub>i</sub> is defined as:
+The method begins by building a training library T from two datasets of images: one with images from CN subjects and the other one from AD patients. Then, for each voxel x<sub>i</sub> of the region of interest in the considered subject x, the PBG method produces a weak classifier denoted, g<sub>x<sub>i</sub></sub>, that provides a surrogate for the pathological grading at the considered position i. A PBG value is computed using a measurement of the similarity between the patch P<sub>x<sub>i</sub></sub> surrounding the voxel x<sub>i</sub> belonging to the image under study and a set K<sub>x<sub>i</sub></sub> = {P<sub>t<sub>j</sub></sub>} of the closest patches P<sub>t<sub>j</sub></sub>, surrounding the voxel t<sub>j</sub>, extracted from the template t &isin; T. The grading value g<sub>x<sub>i</sub></sub>$ at x<sub>i</sub> is defined as:
 </p>
 
 <p align="center"><img src="figures/figure_2.png" width="600"><br>
 Fig. 2 Schema of the proposed multi-scale graph-based grading method. First, the segmentation maps are used to aggregate grading values. Our method computes a histogram for each structure/subfield. Once the graphs are built, an elastic net is computed to select the most discriminating graph features for each anatomical scale. A first layer of random forest classifiers are computed to estimate a posteriori probabilities. Finally, a linear classifier is trained with the a posteriori probabilities from each anatomical scale to compute the final decision. A random forest classifier replaces the linear classifier for the multimodal experiments to deal with the feature heterogeneity resulting from the concatenation of a posteriori probabilities and cognitive scores.</p>
 
-## Graph Construction
+### Graph Construction
 
 <p align="justify">
 Once structure alterations were estimated using patch-based grading, we modeled intra-subject variability for each subject using a graph to better capture the AD signature. \red{Indeed, within the last decade, graph modeling has been widely used for its ability to capture the patterns of different diseases \citep{tong2017multi,parisot2018disease}.} This is achieved by encoding the relationships of abnormalities between different structures in the edges of the graph. Furthermore, graph modeling can also depict inter-subject similarity, by independently encoding the abnormality of each structure in the vertices measurement. Consequently, we proposed a graph-based grading approach that uses a graph model to combine inter-subject similarities computed with the PBG and intra-subjects' variability computed with the difference of the grading value distributions for each structure.
@@ -60,7 +60,7 @@ where W is the Wasserstein distance with L<sub>1</sub> norm \citep{rubner2000ear
 </p>
 
 
-## Features selection
+### Features selection
 
 <p align="justify">
 Completion of the previous step results in a high-dimensional feature vector. Because features computed from the graph-based grading method have varying significance levels, in this work, we used an elastic net regression method to provide a sparse representation of the most discriminating edges and vertices. This results in reducing the feature dimensionality by capturing the key structures and the key relationships between the different brain structures (see Figure~\ref{fig:gsg_workflow}). Indeed, it has been demonstrated that combining the $L1$ and $L2$ norms takes into account possible inter-feature correlation while imposing sparsity \citep{zou2005regularization}. Finally, after normalization, the resulting feature vector is given as the input of the feature selection, defined as the minimization of the following equation:
