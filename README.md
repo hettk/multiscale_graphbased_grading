@@ -21,7 +21,7 @@ The prediction of subjects with mild cognitive impairment (MCI) who will progres
 ## Method overview
 
 <p align="justify">
-As illustrated in Figure~\ref{fig:gsg_workflow}, our graph of structure grading method that combines inter-subjects' similarities and intra-subjects' variability is composed of several steps. 
+As illustrated in Figure 1, our graph of structure grading method that combines inter-subjects' similarities and intra-subjects' variability is composed of several steps. 
 </p>
 
 <p align="justify">
@@ -39,7 +39,7 @@ Following image segmentation, a patch-based grading of the entire brain was perf
 </p>
 
 <p align="justify">
-The method begins by building a training library $T$ from two datasets of images: one with images from CN subjects and the other one from AD patients. Then, for each voxel $x_i$ of the region of interest in the considered subject $x$, the PBG method produces a weak classifier denoted, $g_{x_i}$, that provides a surrogate for the pathological grading at the considered position $i$. A PBG value is computed using a measurement of the similarity between the patch $P_{x_i}$ surrounding the voxel $x_i$ belonging to the image under study and a set $K_{x_i} = \{ P_{t_{j}} \}$ of the closest patches $P_{t_j}$, surrounding the voxel $t_j$, extracted from the template $t \in T$. The grading value $g_{x_i}$ at $x_i$ is defined as:
+The method begins by building a training library T from two datasets of images: one with images from CN subjects and the other one from AD patients. Then, for each voxel <sub>x<sub>i</sub></sub> of the region of interest in the considered subject x, the PBG method produces a weak classifier denoted, g<sub>x<sub>i</sub></sub>, that provides a surrogate for the pathological grading at the considered position i. A PBG value is computed using a measurement of the similarity between the patch P<sub>x<sub>i</sub></sub> surrounding the voxel x<sub>i</sub> belonging to the image under study and a set K<sub>x<sub>i</sub></sub> = { P<sub>t<sub>j</sub></sub> } of the closest patches P<sub>t<sub>j</sub></sub>, surrounding the voxel t<sub>j</sub>, extracted from the template t &isin; T. The grading value g<sub>x<sub>i</sub></sub>$ at x<sub>i</sub> is defined as:
 </p>
 
 <p align="center"><img src="figures/figure_2.png" width="600"><br>
@@ -56,7 +56,7 @@ In our graph-based grading method, the segmentation maps were used to fuse gradi
 </p>
 
 <p align="justify">
-where $W$ is the Wasserstein distance with $L_1$ norm \citep{rubner2000earth} that showed best performance during our experiments. \red{Indeed, this metric introduced by the optimal transport theory, aims to minimize the amount of work needed to rearrange the histogram $H_{v_i}$ to $H_{v_j}$.}
+where W is the Wasserstein distance with L<sub>1</sub> norm \citep{rubner2000earth} that showed best performance during our experiments. \red{Indeed, this metric introduced by the optimal transport theory, aims to minimize the amount of work needed to rearrange the histogram $H_{v_i}$ to $H_{v_j}$.}
 </p>
 
 
