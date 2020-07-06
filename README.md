@@ -28,7 +28,7 @@
 %
 % Return:
 %   - G: Graph of grading structures
-%       G.MS -> Mean of grading values within each structures (vertices)
+%       G.MS -> Mean of grading values within each structures (Vertices)
 %       G.D  -> Distance of grading distributions between each pair of
 %               structures (Edges)
 ```
