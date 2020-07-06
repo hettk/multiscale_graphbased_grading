@@ -5,7 +5,37 @@
 
 ### Summary
 - Implementation (graph construction)
-    - main function : process_pba.m
+    - main function : build_graph.m
+```matlab
+% Main function to build the graph of structures grading
+%
+% G = build_graph(gmap, mask, options):  Compute the graph of
+% structure grading for the subject under study (see Hett et al.
+% Medical Image analysis 2020)
+% 
+% Agurments: 
+%   - gmap
+%       input.mri : path of the mri understudy
+%       input.mask: mask of the region of interest
+%       input.age : age of the subject understudy at scan
+%   - mask
+%       templates.t1_path  : list of path of the template mri
+%       templates.mask_path: list of path of the template mask
+%       templates.ages     : Vector of ages of templates at scan
+%   - options 
+%       options.A;              % [min, max] for each structure [Nstruct,2]
+%       options.C;              % Age regression coefficients   [Nstruct,3]
+%       options.nbins;          % Number of bins per histogram
+%       options.age;            % Age of the subject under study
+%       options.label_str;      % Label for each structure      [2, Nstruct]
+%
+% Return:
+%   - G: Graph of grading structures
+%       G.MS -> Mean of grading values within each structures (vertices)
+%       G.D  -> Distance of grading distributions between each pair of
+%               structures (Edges)
+```
+    
 - Evaluation
     - main scripts: train.py, test.py
 
