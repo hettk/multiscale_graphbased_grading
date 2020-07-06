@@ -7,8 +7,6 @@
 - Implementation (graph construction)
     - main function : build_graph.m
 ```matlab
-% Main function to build the graph of structures grading
-%
 % G = build_graph(gmap, mask, options):  Compute the graph of
 % structure grading for the subject under study (see Hett et al.
 % Medical Image analysis 2020)
