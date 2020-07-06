@@ -8,8 +8,7 @@
     - main function : build_graph.m
 ```matlab
 % G = build_graph(gmap, mask, options):  Compute the graph of
-% structure grading for the subject under study (see Hett et al.
-% Medical Image analysis 2020)
+% structure grading for the subject under study
 % 
 % Agurments: 
 %   - gmap
