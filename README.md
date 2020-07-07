@@ -34,7 +34,7 @@
 ```
     
 - Evaluation
-    - main scripts: train.py, test.py
+    - main scripts: main.m
 
 
 ## Abstract
