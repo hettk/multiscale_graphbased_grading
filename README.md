@@ -1,6 +1,6 @@
 # Multi-scale Graph-based Grading
 
-<p>Implementation of <b>Hett et al., Medical Image Analysis, 2020</b> (see accepted paper <a href="https://github.com/hettk">here</a>)</p>
+<p>Implementation of <b>Hett et al., Medical Image Analysis, 2020</b></p>
 
 
 ### Summary
