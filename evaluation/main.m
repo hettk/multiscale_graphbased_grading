@@ -76,7 +76,7 @@ fprintf('Diagnosis evaluation (CN vs. AD) \n');
 print_performances({'GBSG', 'GHSG', 'MGG'}, m_cnad);
 
 fprintf('Prediction evaluation (sMCI vs. pMCI) \n');
-print_performances({'GBSG', 'GHSG', 'MGG', 'MGG + Cog'}, m_mci);
+print_performances({'GBSG', 'GHSG', 'MGG'}, m_mci);
 
 
 
